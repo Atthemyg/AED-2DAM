@@ -42,7 +42,7 @@ public class IfElseServiceImpl implements IfElseService {
         }
         if (temperatura >= 30) {
             return "CALOR";
-        } else if (temperatura > 15 || temperatura < 30) {
+        } else if (temperatura > 15 && temperatura < 30) {
             return "TEMPLADO";
         }
         return "FRIO";

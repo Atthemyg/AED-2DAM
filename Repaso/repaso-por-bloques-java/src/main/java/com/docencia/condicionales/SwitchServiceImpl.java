@@ -10,29 +10,20 @@ public class SwitchServiceImpl implements SwitchService {
         switch (numeroDia) {
             case 1:
                 return "LUNES";
-                break;
             case 2:
                 return "MARTES";
-                break;
             case 3:
                 return "MIERCOLES";
-                break;
             case 4:
                 return "JUEVES";
-                break;
             case 5:
                 return "VIERNES";
-                break;
             case 6:
                 return "SABADO";
-                break;
             case 7:
                 return "DOMINGO";
-                break;
             default:
-                System.out.println("NUMERO DE LA SEMANA NO VALIDO");
-                break;
-        }
+                throw new IllegalArgumentException();
     }
 
     @Override
@@ -44,17 +35,16 @@ public class SwitchServiceImpl implements SwitchService {
         Double descuento = 0.0;
 
         switch (tipoCliente) {
-            case "SOCIO":
+            case "VIP":
                 descuento = importe * 0.20;
                 break;
-            case "NO SOCIO":
-                descuento = importe * 0.05;
+            case "NORMAL":
+                descuento = 0.0;
                 break;
             default:
-                System.out.println("TIPO DE CLIENTE NO VALIDO");
-                break;
-        }
-        return descuento;
+                throw new IllegalArgumentException();
+            }
+            return descuento;
     }
 
     @Override
@@ -65,12 +55,10 @@ public class SwitchServiceImpl implements SwitchService {
 
         switch (estado) {
             case "ACTIVO":
-                return "USUARIO ACTIVO";
-                break;
+                return "Elemento activo";
             default:
-                System.out.println("USUARIO INACTIVO");
-                break;
-        }
+                return "Elemento inactivo";
+            }
     }
 
     @Override
@@ -78,17 +66,18 @@ public class SwitchServiceImpl implements SwitchService {
         if (mes == null || mes < 1 || mes > 12) {
             throw new IllegalArgumentException();
         }
+
         switch (mes) {
             case 2:
-                return "28 DIAS";
-                break;
-            case 4, 6, 9, 11:
-                return "30 DIAS";
-            break;
+                return 28;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                return 30;
             default:
-                return "31 DIAS";
-                break;
-        }
+                return 31;
+            }
     }
 
     @Override
@@ -98,15 +87,10 @@ public class SwitchServiceImpl implements SwitchService {
         }
 
         switch (codigo) {
-            case "A":
-                return "ALUMNO";
-                break;
-            case "P":
-                return "PROFESOR";
-                break;
+            case "T001":
+                return "TECNOLOGIA";
             default:
                 return "DESCONOCIDO";
-                break;
         }
     }
     
