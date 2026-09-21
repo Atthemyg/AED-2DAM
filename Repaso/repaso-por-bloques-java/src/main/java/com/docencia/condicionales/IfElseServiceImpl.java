@@ -5,7 +5,7 @@ public class IfElseServiceImpl implements IfElseService {
     @Override
     public String clasificarEdad(Integer edad) {
         if (edad == null || edad < 0) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("");
         }
         if (edad < 18) {
             return "MENOR";

@@ -1,6 +1,11 @@
 package com.docencia.condicionales;
-/** Servicio para practicar if/else. */
+
 public interface IfElseService {
+    /**
+     * Funcion que realiza la clasificacion de la edad
+     * @param edad entero
+     * @return valor de la edad
+     * */
     String clasificarEdad(Integer edad);
     String evaluarNota(Integer nota);
     Boolean puedeAcceder(Boolean activo, Integer edad);
