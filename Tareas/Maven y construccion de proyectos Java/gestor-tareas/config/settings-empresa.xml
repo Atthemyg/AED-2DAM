@@ -1,0 +1,16 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.2.0">
+    <servers>
+        <server>
+            <id>empresa</id>
+            <username>${env.MAVEN_REPO_USER}</username>
+            <password>${env.MAVEN_REPO_TOKEN}</password>
+        </server>
+    </servers>
+    <mirrors>
+        <mirror>
+            <id>empresa</id>
+            <mirrorOf>*</mirrorOf>
+            <url>https://repo.empresa.example/repository/maven-public/</url>
+        </mirror>
+    </mirrors>
+</settings>
