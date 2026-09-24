@@ -5,16 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="853e220b-88e4-4453-a96b-cfafd1aa2559" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ies/puerto/FicheroImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ies/puerto/IFichero.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ies/puerto/Producto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/csv.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ies/puerto/LectorRecursos.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ies/puerto/LectorRecursos.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/resources/archivo.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/archivo.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ies/puerto/LectorRecursos.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ies/puerto/LectorRecursos.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +47,7 @@
     "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/alumno/2DAM-REPOS/AED-2DAM/Ficheros/ficheros",
+    "last_opened_file_path": "/home/alumno/2DAM-REPOS/AED-2DAM/Repaso/repaso-por-bloques-java",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.jshint": "true",
     "node.js.detected.package.tslint": "true",

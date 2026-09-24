@@ -24,6 +24,7 @@ public class SwitchServiceImpl implements SwitchService {
                 return "DOMINGO";
             default:
                 throw new IllegalArgumentException();
+        }
     }
 
     @Override
@@ -93,5 +94,4 @@ public class SwitchServiceImpl implements SwitchService {
                 return "DESCONOCIDO";
         }
     }
-    
 }
