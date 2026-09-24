@@ -23,7 +23,7 @@ public class RegexServiceImpl implements RegexService {
         if (telefono == null || telefono.isBlank()) {
             return false;
         }
-        return telefono.matches("^[0-9]{9}$");
+        return telefono.matches("^[6][0-9]{8}$");
     }
 
     @Override
