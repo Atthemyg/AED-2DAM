@@ -7,32 +7,60 @@ public class BusquedaServiceImpl implements BusquedaService {
 
     @Override
     public Integer buscarIndiceElemento(List<Integer> numeros, Integer valor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarIndiceElemento'");
+        if (numeros == null || numeros.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        return numeros.indexOf(valor);
     }
 
     @Override
     public Boolean existePalabra(List<String> palabras, String palabra) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'existePalabra'");
+        if (palabras == null || palabras.isEmpty() || palabra == null) {
+            return false;
+        }
+
+        for (String string : palabras) {
+            if (string.equals(palabra)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public Integer encontrarMaximo(List<Integer> numeros) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'encontrarMaximo'");
+        if (numeros == null || numeros.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
+        Integer maximo = numeros.get(0);
+        for (Integer integer : numeros) {
+            if (integer > maximo) {
+                maximo = integer;
+            }
+        }
+        return maximo;
     }
 
     @Override
     public Integer encontrarMinimo(List<Integer> numeros) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'encontrarMinimo'");
+        Integer minimo = numeros.get(0);
+        for (Integer integer : numeros) {
+            if (integer < minimo) {
+                minimo = integer;
+            }
+        }
+        return minimo;
     }
 
     @Override
     public Integer contarApariciones(List<Integer> numeros, Integer valor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'contarApariciones'");
+        Integer contador = 0;
+        for (Integer integer : numeros) {
+            if (integer.equals(valor)) {
+                contador++;
+            }
+        }
+        return contador;
     }
 
 }
