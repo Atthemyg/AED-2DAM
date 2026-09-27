@@ -4,32 +4,42 @@ public class MathServiceImpl implements MathService {
 
     @Override
     public Double calcularAreaCirculo(Double radio) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calcularAreaCirculo'");
+        if (radio == null || radio <= 0) {
+            throw new IllegalArgumentException();
+        }
+        return radio * 2 * Math.PI;
     }
 
     @Override
     public Integer calcularPotencia(Integer base, Integer exponente) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calcularPotencia'");
+        if (base == null || exponente == null) {
+            throw new IllegalArgumentException();
+        }
+        return (int) Math.pow(base, exponente);
     }
 
     @Override
     public Integer redondearHaciaArriba(Double numero) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'redondearHaciaArriba'");
+        if (numero == null || numero == 0) {
+            throw new IllegalArgumentException();
+        }
+        return (int) Math.ceil(numero);
     }
 
     @Override
     public Double calcularRaizCuadrada(Double numero) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calcularRaizCuadrada'");
+        if (numero == null || numero == 0) {
+            throw new IllegalArgumentException();
+        }
+        return Math.sqrt(numero);
     }
 
     @Override
     public Integer obtenerValorAbsoluto(Integer numero) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obtenerValorAbsoluto'");
+        if (numero == null || numero == 0) {
+            throw new IllegalArgumentException();
+        }
+        return Math.abs(numero);
     }
     
 }
