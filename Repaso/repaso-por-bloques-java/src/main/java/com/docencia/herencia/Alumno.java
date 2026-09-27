@@ -27,8 +27,7 @@ public class Alumno extends Persona {
 
     @Override
     public String toString() {
-        return "Alumno{" +
-                "expediente='" + expediente + '\'' +
-                '}';
+        return "ALUMNO:" + " " +
+                getNombre() + " " + getApellidos() + " (" + getEdad() + ")";
     }
 }

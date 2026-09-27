@@ -4,32 +4,45 @@ public class HerenciaServiceImpl implements HerenciaService {
 
     @Override
     public String obtenerNombreCompleto(Persona persona) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obtenerNombreCompleto'");
+        if (persona == null) {
+            throw new IllegalArgumentException();
+        }
+        return persona.getNombre() + " " + persona.getApellidos();
     }
 
     @Override
     public Boolean esAlumno(Persona persona) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'esAlumno'");
+        if (persona == null) {
+            throw new IllegalArgumentException();
+        }
+        return persona instanceof Alumno;
     }
 
     @Override
     public String obtenerDescripcionPersona(Persona persona) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obtenerDescripcionPersona'");
+        if (persona == null) {
+            throw new IllegalArgumentException();
+        }
+        return persona.toString();
     }
 
     @Override
     public Boolean tieneEdadMinima(Persona persona, Integer edadMinima) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'tieneEdadMinima'");
+        if (persona == null || edadMinima == null) {
+            throw new IllegalArgumentException();
+        }
+        return persona.getEdad() >= edadMinima;
     }
 
     @Override
     public String obtenerTipoPersona(Persona persona) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obtenerTipoPersona'");
+        if (persona == null) {
+            throw new IllegalArgumentException();
+        }
+        if (persona instanceof Alumno) {
+            return "ALUMNO";
+        }
+        return "PERSONA";
     }
     
 }
