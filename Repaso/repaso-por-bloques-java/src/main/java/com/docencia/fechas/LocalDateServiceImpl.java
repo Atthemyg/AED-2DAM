@@ -8,32 +8,42 @@ public class LocalDateServiceImpl implements LocalDateService {
 
     @Override
     public Integer calcularEdad(LocalDate fechaNacimiento) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calcularEdad'");
+        if (fechaNacimiento == null || fechaNacimiento.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException();
+        }
+        return Period.between(fechaNacimiento, LocalDate.now()).getYears();
     }
 
     @Override
     public Boolean esFechaFutura(LocalDate fecha) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'esFechaFutura'");
+        if (fecha == null) {
+            throw new IllegalArgumentException();
+        }
+        return fecha.isAfter(LocalDate.now());
     }
 
     @Override
     public Long calcularDiasEntreFechas(LocalDate inicio, LocalDate fin) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'calcularDiasEntreFechas'");
+        if (inicio == null || fin == null || fin.isBefore(inicio)) {
+            throw new IllegalArgumentException();
+        }
+        return (long) Period.between(inicio, fin).getDays();
     }
 
     @Override
     public LocalDate sumarDias(LocalDate fecha, Integer dias) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'sumarDias'");
+        if (fecha == null || dias == null) {
+            throw new IllegalArgumentException();
+        }
+        return fecha.plusDays(dias);
     }
 
     @Override
     public Boolean esMayorDeEdad(LocalDate fechaNacimiento) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'esMayorDeEdad'");
+        if (fechaNacimiento == null) {
+            throw new IllegalArgumentException();
+        }
+        return Period.between(fechaNacimiento, LocalDate.now()).getYears() > 18;
     }
-    
+
 }
