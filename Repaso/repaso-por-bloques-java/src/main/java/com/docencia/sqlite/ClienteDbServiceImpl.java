@@ -1,5 +1,6 @@
 package com.docencia.sqlite;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClienteDbServiceImpl implements ClienteDbService {
@@ -11,38 +12,50 @@ public class ClienteDbServiceImpl implements ClienteDbService {
 
     @Override
     public Boolean create(Cliente cliente) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        if (cliente == null) {
+            return false;
+        }
+        if (repository.findByDni(cliente.getDni()) != null){
+            return false;
+        }
+        return repository.save(cliente);
     }
 
     @Override
     public Cliente findByDni(String dni) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByDni'");
+        if (dni == null) {
+            return null;
+        }
+        return repository.findByDni(dni);
     }
 
     @Override
     public List<Cliente> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+        return repository.findAll();
     }
 
     @Override
     public Boolean update(Cliente cliente) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        if (cliente == null) {
+            return false;
+        }
+        return repository.update(cliente);
     }
 
     @Override
     public Boolean deleteByDni(String dni) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteByDni'");
+        if (dni == null || dni.isBlank()) {
+            return false;
+        }
+        return repository.deleteByDni(dni);
     }
 
     @Override
     public List<Cliente> findByCiudad(String ciudad) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findByCiudad'");
+        if (ciudad == null || ciudad.isBlank()) {
+            return new ArrayList<>();
+        }
+        return repository.findByCiudad(ciudad);
     }
 
     
