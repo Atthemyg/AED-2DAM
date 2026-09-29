@@ -15,7 +15,7 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
-public class CsvRepository extends AbstractRepositorty implements IRepository{
+public class CsvRepository extends AbstractRepository {
 
     private final CSVFormat inputFormat = CSVFormat.DEFAULT.builder()
             .setHeader()
