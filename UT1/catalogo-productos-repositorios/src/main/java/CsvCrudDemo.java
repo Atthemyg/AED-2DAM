@@ -94,4 +94,3 @@ public class CsvCrudDemo {
         repo.findAll().forEach(System.out::println);
     }
 }
-

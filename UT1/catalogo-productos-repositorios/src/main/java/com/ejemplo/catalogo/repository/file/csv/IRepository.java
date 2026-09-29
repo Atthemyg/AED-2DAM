@@ -16,7 +16,7 @@ public interface IRepository {
     /**
      * Funcion que obtiene el elemento
      * @param id Identificador del producto
-     * @return Optional del producto
+     * @return Optinial del productor
      */
     Optional<Producto> findById(long id);
 
@@ -32,7 +32,6 @@ public interface IRepository {
      * @return
      */
     boolean update(Producto producto);
-
 
     boolean delete(long id);
 }
