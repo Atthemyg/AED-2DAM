@@ -13,7 +13,7 @@
         <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <commons-csv.version>1.14.1</commons-csv.version>
-        <jackson-databind.version>2.22.3</jackson-databind.version>
+        <jackson.version>2.22.3</jackson.version>
     </properties>
 
     <dependencies>
@@ -25,7 +25,12 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>${jackson-databind.version}</version>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>${jackson.version}</version>
         </dependency>
     </dependencies>
 
