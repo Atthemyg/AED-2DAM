@@ -12,7 +12,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 
-public class JsonRepository extends AbstractRepository {
+public class JsonRepository extends AbstractProductoRepository {
 
     // private final ObjectMapper mapper = new ObjectMapper();
     private final ObjectMapper mapper;

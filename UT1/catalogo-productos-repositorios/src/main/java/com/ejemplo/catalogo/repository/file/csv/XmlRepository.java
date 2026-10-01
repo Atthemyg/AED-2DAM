@@ -2,19 +2,14 @@ package com.ejemplo.catalogo.repository.file.csv;
 
 import com.ejemplo.catalogo.model.Producto;
 import com.ejemplo.catalogo.model.ProductosXml;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.nio.file.AtomicMoveNotSupportedException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 
-public class XmlRepository extends AbstractRepository {
+public class XmlRepository extends AbstractProductoRepository {
 
     // private final ObjectMapper mapper = new ObjectMapper();
     private final XmlMapper mapper;

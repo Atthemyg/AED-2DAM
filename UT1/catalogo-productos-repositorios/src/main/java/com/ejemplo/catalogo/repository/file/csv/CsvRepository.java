@@ -13,9 +13,8 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
-import java.util.Optional;
 
-public class CsvRepository extends AbstractRepository {
+public class CsvRepository extends AbstractFileRepository<Producto, Long> implements IProductoRepository {
 
     private final CSVFormat inputFormat = CSVFormat.DEFAULT.builder()
             .setHeader()
@@ -25,42 +24,33 @@ public class CsvRepository extends AbstractRepository {
             .setHeader("id", "nombre", "precio")
             .get();
 
-
-    CsvRepository(Path path) {
+    public CsvRepository(Path path) {
         super(path);
-        productos = load();
     }
 
     @Override
-    public List<Producto> load() {
-
-        try (Reader reader = Files.newBufferedReader(getPath(), StandardCharsets.UTF_8);
-             CSVParser parser = inputFormat.parse(reader)) {
-            for (CSVRecord row : parser) {
-                productos.add(new Producto(
-                        Long.parseLong(row.get("id")),
-                        row.get("nombre"),
-                        Double.parseDouble(row.get("precio"))));
+    protected List<Producto> readAll() {
+            try (Reader reader = Files.newBufferedReader(getPath(), StandardCharsets.UTF_8);
+                 CSVParser parser = inputFormat.parse(reader)) {
+                for (CSVRecord row : parser) {
+                    list.add(new Producto(
+                            Long.parseLong(row.get("id")),
+                            row.get("nombre"),
+                            Double.parseDouble(row.get("precio"))));
+                }
+            } catch (IOException e) {
+                //Logger.ERROR //FINE
             }
-        } catch (IOException e) {
-            //Logger.ERROR //FINE
-        }
-        return productos;
+            return list;
     }
 
-
-
-
-
     @Override
-    public void saveAll(List<Producto> items)  {
-
+    protected void writeAll(List<Producto> elements) {
         try (Writer writer = Files.newBufferedWriter(getPath(), StandardCharsets.UTF_8);
              CSVPrinter printer = new CSVPrinter(writer, outputFormat)) {
-            for (Producto p : items) printer.printRecord(p.id(), p.nombre(), p.precio());
+            for (Producto p : elements) printer.printRecord(p.id(), p.nombre(), p.precio());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 }

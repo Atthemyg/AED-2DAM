@@ -1,6 +1,6 @@
 package com.ejemplo.catalogo.configuration;
 
-import com.ejemplo.catalogo.repository.file.csv.IRepository;
+import com.ejemplo.catalogo.repository.file.csv.IProductoRepository;
 import com.ejemplo.catalogo.repository.file.csv.JsonRepository;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.util.Properties;
 public class AppConfiguration {
     private static Path path;
     private static Properties props;
-    static IRepository repository;
+    static IProductoRepository repository;
     public static void main(String[] args) {
         path = Path.of("data", "app.properties");
         props = new Properties();

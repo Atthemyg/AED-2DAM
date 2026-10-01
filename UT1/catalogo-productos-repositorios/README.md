@@ -10,8 +10,8 @@ Es un **catálogo de productos** (`id`, `nombre`, `precio`) cuya información se
 
 Para conseguirlo se usa el **patrón Repositorio**:
 
-- Una **interfaz** (`IRepository`) define *qué* se puede hacer: listar, buscar, crear, actualizar y borrar.
-- Una **clase abstracta** (`AbstractRepository`) implementa la lógica común (el CRUD sobre una lista en memoria).
+- Una **interfaz** (`IProductoRepository`) define *qué* se puede hacer: listar, buscar, crear, actualizar y borrar.
+- Una **clase abstracta** (`AbstractProductoRepository`) implementa la lógica común (el CRUD sobre una lista en memoria).
 - Tres **clases concretas** (`CsvRepository`, `JsonRepository`, `XmlRepository`) solo se encargan de *cómo* se lee y se escribe cada formato.
 - Un fichero de configuración (`app.properties`) y una clase (`AppConfiguration`) deciden qué formato usar.
 
@@ -178,7 +178,7 @@ Para JSON y CSV no hace falta una clase así: JSON puede ser directamente una li
 
 ---
 
-## 6. La interfaz `IRepository`
+## 6. La interfaz `IProductoRepository`
 
 Define el **contrato** que cumplen los tres repositorios:
 
@@ -196,7 +196,7 @@ A diferencia de `CsvCrudDemo`, estos métodos **no declaran `throws IOException`
 
 ---
 
-## 7. `AbstractRepository` (la lógica común)
+## 7. `AbstractProductoRepository` (la lógica común)
 
 Es la clase que evita repetir código. Aplica el patrón **Template Method**: implementa el CRUD completo y deja dos métodos abstractos para que cada formato los rellene.
 
@@ -309,7 +309,7 @@ Paso a paso:
 3. Imprime el formato: `storage.format`.
 4. Imprime `storage.fichero`, usando `"Valor_por_defecto"` si no existe esa clave. (Ver problema nº 4: la clave real se llama `storage.path`.)
 5. Pone `app.name = FileLab` y **guarda el fichero** con `props.store(writer, "Configuración de la aplicación")`. Esto añade la línea de comentario y la fecha. Al usar un `Writer` UTF-8, las tildes se guardan tal cual en lugar de como `\u00f3`.
-6. Si el formato es `json`, crea `new JsonRepository(Path.of(props.getProperty("storage.path")))` y lo guarda en el campo estático `repository`, de tipo `IRepository`.
+6. Si el formato es `json`, crea `new JsonRepository(Path.of(props.getProperty("storage.path")))` y lo guarda en el campo estático `repository`, de tipo `IProductoRepository`.
 
 El campo se declara con el tipo de la **interfaz**, no con el de la clase concreta: así el resto del código no depende del formato.
 
@@ -321,7 +321,7 @@ Está en el paquete por defecto (sin `package`) y contiene todo junto: un `recor
 
 Diferencia importante con los repositorios: **no guarda estado en memoria**. Cada operación vuelve a leer el fichero entero:
 
-|  | `CsvCrudDemo` | Repositorios (`AbstractRepository`) |
+|  | `CsvCrudDemo` | Repositorios (`AbstractProductoRepository`) |
 | --- | --- | --- |
 | Datos | Se leen del fichero en cada llamada | Se cargan una vez y viven en una lista |
 | Formatos | Solo CSV | CSV, JSON y XML |
@@ -369,7 +369,7 @@ Si el repositorio fuera `CsvRepository` o `XmlRepository`, los pasos 1 a 3 serí
 
 ### Graves (el programa falla)
 
-**1. La lista `productos` nunca se inicializa.** En `AbstractRepository` está declarada (`List<Producto> productos;`) pero vale `null`. Cuando `load()` hace `productos.add(...)`, `productos.clear()` o `productos.addAll(...)` se produce un `NullPointerException`. *Arreglo:* inicializarla en la declaración.
+**1. La lista `productos` nunca se inicializa.** En `AbstractProductoRepository` está declarada (`List<Producto> productos;`) pero vale `null`. Cuando `load()` hace `productos.add(...)`, `productos.clear()` o `productos.addAll(...)` se produce un `NullPointerException`. *Arreglo:* inicializarla en la declaración.
 
 ```java
 protected List<Producto> productos = new ArrayList<>();
@@ -383,7 +383,7 @@ private final ObjectMapper mapper = new ObjectMapper();
 
 Los inicializadores de campo se ejecutan justo después de `super(...)` y antes del resto del constructor, así que así `mapper` ya existe cuando se llama a `load()`.
 
-**3. Un fichero nuevo se crea vacío y JSON/XML no pueden leer un fichero vacío.** `AbstractRepository` crea el fichero vacío si no existe, y Jackson lanza un error ("No content to map") al leerlo. Con el `productos.json` actual no ocurre porque ya tiene contenido, pero con una ruta nueva (por ejemplo, un `productos.xml` que aún no existe) sí. *Arreglo:* en `load()` comprobar `Files.size(getPath()) == 0` y devolver la lista vacía, o escribir `[]` al crear un JSON nuevo.
+**3. Un fichero nuevo se crea vacío y JSON/XML no pueden leer un fichero vacío.** `AbstractProductoRepository` crea el fichero vacío si no existe, y Jackson lanza un error ("No content to map") al leerlo. Con el `productos.json` actual no ocurre porque ya tiene contenido, pero con una ruta nueva (por ejemplo, un `productos.xml` que aún no existe) sí. *Arreglo:* en `load()` comprobar `Files.size(getPath()) == 0` y devolver la lista vacía, o escribir `[]` al crear un JSON nuevo.
 
 ### Medios (comportamiento incorrecto)
 
@@ -397,7 +397,7 @@ Los inicializadores de campo se ejecutan justo después de `super(...)` y antes 
 
 ### Mejoras de diseño
 
-**8. Todos los repositorios están en el paquete `...repository.file.csv`.** Incluidos JSON y XML y la interfaz, que no tienen nada que ver con CSV. El README prepara los paquetes `repository`, `repository.file` y `repository.file.csv`: lo lógico sería `IRepository` en `repository`, `AbstractRepository` en `repository.file`, y cada implementación en su paquete de formato.
+**8. Todos los repositorios están en el paquete `...repository.file.csv`.** Incluidos JSON y XML y la interfaz, que no tienen nada que ver con CSV. El README prepara los paquetes `repository`, `repository.file` y `repository.file.csv`: lo lógico sería `IProductoRepository` en `repository`, `AbstractProductoRepository` en `repository.file`, y cada implementación en su paquete de formato.
 
 **9. `findAll()` devuelve la lista interna.** Quien la reciba puede modificarla y cambiar el catálogo sin pasar por `create/update/delete`, y sin que se guarde. Es más seguro devolver `List.copyOf(productos)`.
 
@@ -415,8 +415,8 @@ Los inicializadores de campo se ejecutan justo después de `super(...)` y antes 
 | --- | --- | --- |
 | `record` | `Producto` | Clase de datos inmutable con constructor, accesores, `equals`, `hashCode` y `toString` automáticos |
 | `Optional<T>` | `findById` | Contenedor que puede tener un valor o estar vacío |
-| Interfaz | `IRepository` | Contrato: define métodos sin implementarlos |
-| Clase abstracta | `AbstractRepository` | Clase parcialmente implementada que no se puede instanciar |
+| Interfaz | `IProductoRepository` | Contrato: define métodos sin implementarlos |
+| Clase abstracta | `AbstractProductoRepository` | Clase parcialmente implementada que no se puede instanciar |
 | Stream | `findById`, `create` | Forma de recorrer y filtrar colecciones (`filter`, `anyMatch`, `findFirst`) |
 | `try` con recursos | CSV, JSON, config | Cierra ficheros automáticamente al terminar |
 | `Path` / `Files` | Todas | API moderna de Java para rutas y ficheros |
