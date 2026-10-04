@@ -6,30 +6,30 @@ import java.nio.file.Path;
 public class FileService {
 
     public boolean existe(File file) {
-        throw new UnsupportedOperationException("Función no implementada");
+        return file.exists();
     }
 
     public boolean esArchivo(File file) {
-        throw new UnsupportedOperationException("Función no implementada");
+        return file.isFile(); // documento.txt → true | carpeta → falseno | Existe.txt → false
     }
 
     public boolean esDirectorio(File file) {
-        throw new UnsupportedOperationException("Función no implementada");
+        return file.isDirectory();
     }
 
     public String nombre(File file) {
-        throw new UnsupportedOperationException("Función no implementada");
+        return file.getName();
     }
 
     public File padre(File file) {
-        throw new UnsupportedOperationException("Función no implementada");
+        return file.getParentFile(); // data/productos.csv -> data
     }
 
     public Path convertirAPath(File file) {
-        throw new UnsupportedOperationException("Función no implementada");
+        return file.toPath();
     }
 
     public File convertirAFile(Path path) {
-        throw new UnsupportedOperationException("Función no implementada");
+        return path.toFile();
     }
 }
