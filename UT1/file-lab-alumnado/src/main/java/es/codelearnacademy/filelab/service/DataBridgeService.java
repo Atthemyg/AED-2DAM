@@ -1,5 +1,7 @@
 package es.codelearnacademy.filelab.service;
 
+import es.codelearnacademy.filelab.repository.IProductoRepository;
+
 import java.nio.file.Path;
 
 public class DataBridgeService {
@@ -12,6 +14,6 @@ public class DataBridgeService {
 
     public int convert(FileFormat origenFormato, Path origen,
                        FileFormat destinoFormato, Path destino) {
-        throw new UnsupportedOperationException("Función no implementada");
+        IProductoRepository productoRepository = RepositoryFactory.create(origenFormato, origen);
     }
 }
