@@ -22,10 +22,10 @@ public class DocumentoProductos {
     }
 
     public List<Producto> getProductos() {
-        throw new UnsupportedOperationException("Función no implementada");
+        return productos;
     }
 
     public void setProductos(List<Producto> productos) {
-        throw new UnsupportedOperationException("Función no implementada");
+        this.productos = productos;
     }
 }
