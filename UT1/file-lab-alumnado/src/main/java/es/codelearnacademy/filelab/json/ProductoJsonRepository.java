@@ -26,16 +26,20 @@ public class ProductoJsonRepository
 
     @Override
     protected Long getId(Producto producto) {
-        throw new UnsupportedOperationException("Función no implementada");
+        return producto.id();
     }
 
+    // Como el JSON contiene directamente un array de productos, Jackson puede convertirlo directamente a una lista
     @Override
     protected List<Producto> readAll() throws IOException {
-        throw new UnsupportedOperationException("Función no implementada");
+        return mapper.readValue(  // Lee el contenido del fichero y conviértelo a objetos Java
+                path.toFile(), // Convierte el Path que tenemos en un File, que es una forma que ObjectMapper puede utilizar para leer el archivo
+                mapper.getTypeFactory().constructCollectionType(List.class, Producto.class)); // Le indicamos a Jackson que queremos una lista cuyos elementos son objetos Producto
     }
 
+    // ObjectMapper puede convertir directamente la lista completa de Producto en JSON y escribirla en el fichero
     @Override
     protected void writeAll(List<Producto> productos) throws IOException {
-        throw new UnsupportedOperationException("Función no implementada");
+        mapper.writeValue(path.toFile(), productos); // Coge este objeto Java y conviértelo a JSON para guardarlo en un fichero
     }
 }
