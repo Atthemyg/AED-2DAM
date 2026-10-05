@@ -8,13 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @JacksonXmlRootElement(localName = "productos")
-public class ProductosXml {
+public class ProductosDocument {
 
     @JacksonXmlElementWrapper(useWrapping = false)
     @JacksonXmlProperty(localName = "producto")
     public List<Producto> productos;
 
-    public ProductosXml() {
+    public ProductosDocument() {
         productos = new ArrayList<>();
     }
 

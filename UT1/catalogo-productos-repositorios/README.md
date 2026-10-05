@@ -12,7 +12,7 @@ Para conseguirlo se usa el **patrón Repositorio**:
 
 - Una **interfaz** (`IProductoRepository`) define *qué* se puede hacer: listar, buscar, crear, actualizar y borrar.
 - Una **clase abstracta** (`AbstractProductoRepository`) implementa la lógica común (el CRUD sobre una lista en memoria).
-- Tres **clases concretas** (`CsvRepository`, `JsonRepository`, `XmlRepository`) solo se encargan de *cómo* se lee y se escribe cada formato.
+- Tres **clases concretas** (`CsvRepository`, `JsonProductoRepository`, `XmlProductoRepository`) solo se encargan de *cómo* se lee y se escribe cada formato.
 - Un fichero de configuración (`app.properties`) y una clase (`AppConfiguration`) deciden qué formato usar.
 
 ```
@@ -103,7 +103,7 @@ La primera línea es la **cabecera**. Cada línea siguiente es un producto. El f
 ]
 ```
 
-Una lista de tres productos escrita a mano. Cada objeto JSON tiene los mismos nombres que los campos del `record Producto`, y eso es lo que permite a Jackson convertirlos sin ayuda extra. En cuanto `JsonRepository` guarde algo, reescribirá el fichero con su propio formato.
+Una lista de tres productos escrita a mano. Cada objeto JSON tiene los mismos nombres que los campos del `record Producto`, y eso es lo que permite a Jackson convertirlos sin ayuda extra. En cuanto `JsonProductoRepository` guarde algo, reescribirá el fichero con su propio formato.
 
 ### `app.properties`
 
@@ -268,7 +268,7 @@ outputFormat = CSVFormat.DEFAULT.builder().setHeader("id", "nombre", "precio").g
 
 Los `try (...)` con recursos entre paréntesis cierran el fichero solos al terminar, aunque haya error.
 
-### 8.2 `JsonRepository`
+### 8.2 `JsonProductoRepository`
 
 Usa un `ObjectMapper` de Jackson.
 
@@ -289,12 +289,12 @@ mapper.readValue(getPath().toFile(), new TypeReference<List<Producto>>() {});
 
 `TypeReference<List<Producto>>` es necesario porque Java "olvida" el tipo genérico en tiempo de ejecución (*type erasure*). Sin él, Jackson no sabría que debe crear objetos `Producto`. Después comprueba que no sea `null` (un JSON que contenga solo `null` daría `null`), vacía la lista en memoria (`clear()`) y copia los elementos leídos (`addAll`). Los `IOException` se convierten en `UncheckedIOException`.
 
-### 8.3 `XmlRepository`
+### 8.3 `XmlProductoRepository`
 
 Idéntica idea que la de JSON pero con `XmlMapper`.
 
-- **`saveAll`**: crea un `ProductosXml`, le asigna la lista y lo escribe con `writerWithDefaultPrettyPrinter()` directamente en el fichero. **No** usa fichero temporal: ese bloque está comentado (era la copia del código de JSON). Por eso quedan variables sin uso (`temporal`), un `finally` vacío y varios `import` que ya no se usan.
-- **`load`**: lee el fichero como `ProductosXml`, vacía la lista y añade los productos que contiene.
+- **`saveAll`**: crea un `ProductosDocument`, le asigna la lista y lo escribe con `writerWithDefaultPrettyPrinter()` directamente en el fichero. **No** usa fichero temporal: ese bloque está comentado (era la copia del código de JSON). Por eso quedan variables sin uso (`temporal`), un `finally` vacío y varios `import` que ya no se usan.
+- **`load`**: lee el fichero como `ProductosDocument`, vacía la lista y añade los productos que contiene.
 
 ---
 
@@ -351,15 +351,15 @@ Eso es exactamente lo que hay ahora en `productos.csv`. Si se ejecuta una segund
 
 ## 11. Cómo encaja todo (ejemplo de flujo)
 
-`repository.create(new Producto(4, "Auriculares", 39.5))` con `JsonRepository`:
+`repository.create(new Producto(4, "Auriculares", 39.5))` con `JsonProductoRepository`:
 
 1. Se ejecuta `AbstractRepository.create`.
 2. Comprueba que no sea `null`, que el id no sea negativo y que no exista ya.
 3. Añade el producto a la lista en memoria.
-4. Llama a `saveAll(productos)`, que en este caso es la versión de `JsonRepository`.
-5. `JsonRepository` escribe el temporal y lo mueve sobre `productos.json`.
+4. Llama a `saveAll(productos)`, que en este caso es la versión de `JsonProductoRepository`.
+5. `JsonProductoRepository` escribe el temporal y lo mueve sobre `productos.json`.
 
-Si el repositorio fuera `CsvRepository` o `XmlRepository`, los pasos 1 a 3 serían idénticos y solo cambiaría el paso 4. Esa es la ventaja de este diseño.
+Si el repositorio fuera `CsvRepository` o `XmlProductoRepository`, los pasos 1 a 3 serían idénticos y solo cambiaría el paso 4. Esa es la ventaja de este diseño.
 
 ---
 
@@ -375,7 +375,7 @@ Si el repositorio fuera `CsvRepository` o `XmlRepository`, los pasos 1 a 3 serí
 protected List<Producto> productos = new ArrayList<>();
 ```
 
-**2. En `JsonRepository` y `XmlRepository`, el `mapper` se crea después de usarlo.** El constructor hace `productos = load();` y **después** `mapper = new ObjectMapper();`. Pero `load()` usa `mapper`, que todavía es `null` → `NullPointerException`. *Arreglo:* inicializarlo en la propia declaración, como indica el comentario que hay encima:
+**2. En `JsonProductoRepository` y `XmlProductoRepository`, el `mapper` se crea después de usarlo.** El constructor hace `productos = load();` y **después** `mapper = new ObjectMapper();`. Pero `load()` usa `mapper`, que todavía es `null` → `NullPointerException`. *Arreglo:* inicializarlo en la propia declaración, como indica el comentario que hay encima:
 
 ```java
 private final ObjectMapper mapper = new ObjectMapper();
@@ -391,7 +391,7 @@ Los inicializadores de campo se ejecutan justo después de `super(...)` y antes 
 
 **5. `AppConfiguration` solo soporta JSON.** Si `storage.format` fuera `csv` o `xml`, `repository` se queda en `null`. Además `props.getProperty("storage.format").equals("json")` falla con `NullPointerException` si falta la clave. Es más seguro `"json".equals(...)` y un `switch` con los tres formatos y un `default` que lance un error claro. Tampoco se usa el repositorio después de crearlo.
 
-**6. `CsvRepository` tiene el constructor sin `public`.** `JsonRepository` y `XmlRepository` sí lo tienen público. Desde `AppConfiguration` (otro paquete) no se podría crear un `CsvRepository`.
+**6. `CsvRepository` tiene el constructor sin `public`.** `JsonProductoRepository` y `XmlProductoRepository` sí lo tienen público. Desde `AppConfiguration` (otro paquete) no se podría crear un `CsvRepository`.
 
 **7. `CsvRepository.load()` no vacía la lista antes de cargar.** JSON y XML hacen `productos.clear()`; CSV solo añade. Si se llamara a `load()` dos veces, los productos saldrían duplicados. Además, ignora los `IOException` en silencio, así que un fallo de lectura parecería un catálogo vacío.
 
@@ -403,7 +403,7 @@ Los inicializadores de campo se ejecutan justo después de `super(...)` y antes 
 
 **10. `create` ignora en silencio un producto nulo o con id negativo.** Pero lanza excepción si el id está duplicado. Es incoherente: lo normal sería lanzar `IllegalArgumentException` en ambos casos.
 
-**11. Código sobrante.** `XmlRepository` tiene imports sin usar (`TypeReference`, `ObjectMapper`, `Files`, `StandardCopyOption`, `AtomicMoveNotSupportedException`), una variable `temporal` sin usar, un `finally` vacío y un bloque grande comentado. `JsonRepository.saveAll` escribe el campo `productos` en lugar del parámetro `items`; funciona porque son la misma lista, pero confunde.
+**11. Código sobrante.** `XmlProductoRepository` tiene imports sin usar (`TypeReference`, `ObjectMapper`, `Files`, `StandardCopyOption`, `AtomicMoveNotSupportedException`), una variable `temporal` sin usar, un `finally` vacío y un bloque grande comentado. `JsonRepository.saveAll` escribe el campo `productos` en lugar del parámetro `items`; funciona porque son la misma lista, pero confunde.
 
 **12. `CsvCrudDemo` duplica el modelo.** Tiene su propio `Producto` y vive en el paquete por defecto. Una vez que el diseño por capas funcione, se puede borrar o mover a una carpeta de ejemplos.
 
@@ -422,4 +422,4 @@ Los inicializadores de campo se ejecutan justo después de `super(...)` y antes 
 | `Path` / `Files` | Todas | API moderna de Java para rutas y ficheros |
 | Excepción sin comprobar | Repositorios | `RuntimeException` / `UncheckedIOException`: no obligan a `throws` ni `try/catch` |
 | `Properties` | `AppConfiguration` | Mapa clave-valor para ficheros de configuración |
-| Anotaciones Jackson | `ProductosXml` | Marcas que controlan el nombre y la forma de los elementos XML |
+| Anotaciones Jackson | `ProductosDocument` | Marcas que controlan el nombre y la forma de los elementos XML |

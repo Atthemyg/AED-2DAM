@@ -1,7 +1,7 @@
 package com.ejemplo.catalogo.repository.file.csv;
 
 import com.ejemplo.catalogo.model.Producto;
-import com.ejemplo.catalogo.model.ProductosXml;
+import com.ejemplo.catalogo.model.ProductosDocument;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import java.io.IOException;
@@ -9,14 +9,14 @@ import java.io.UncheckedIOException;
 import java.nio.file.Path;
 import java.util.List;
 
-public class XmlRepository extends AbstractProductoRepository {
+public class XmlProductoRepository extends AbstractProductoRepository<Producto, Long> {
 
     // private final ObjectMapper mapper = new ObjectMapper();
     private final XmlMapper mapper;
 
-    public XmlRepository(Path path) {
+    public XmlProductoRepository(Path path) {
         super(path);
-        productos = load();
+        list = readAll();
         mapper = new XmlMapper();
     }
 
@@ -25,10 +25,10 @@ public class XmlRepository extends AbstractProductoRepository {
         Path temporal = null;
 
         try {
-            ProductosXml productosXml = new ProductosXml();
-            productosXml.setProductos(productos);
+            ProductosDocument productosDocument = new ProductosDocument();
+            productosDocument.setProductos(productos);
             mapper.writerWithDefaultPrettyPrinter()
-                    .writeValue(getPath().toFile(),productosXml);
+                    .writeValue(getPath().toFile(), productosDocument);
 
             /*Path destino = getPath().toAbsolutePath();
             Path directorio = destino.getParent();
@@ -57,12 +57,12 @@ public class XmlRepository extends AbstractProductoRepository {
     @Override
     public List<Producto> load() {
         try {
-            ProductosXml productosXml = mapper.readValue(getPath().toFile(), ProductosXml.class);
-            productos.clear();
-            productos.addAll(productosXml.getProductos());
+            ProductosDocument productosDocument = mapper.readValue(getPath().toFile(), ProductosDocument.class);
+            list.clear();
+            list.addAll(productosDocument.getProductos());
         } catch (IOException e) {
             throw new UncheckedIOException("No se pudo cargar " + getPath(), e);
         }
-        return productos;
+        return list;
     }
 }
