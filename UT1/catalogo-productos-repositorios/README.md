@@ -12,7 +12,7 @@ Para conseguirlo se usa el **patrón Repositorio**:
 
 - Una **interfaz** (`IProductoRepository`) define *qué* se puede hacer: listar, buscar, crear, actualizar y borrar.
 - Una **clase abstracta** (`AbstractProductoRepository`) implementa la lógica común (el CRUD sobre una lista en memoria).
-- Tres **clases concretas** (`CsvRepository`, `JsonProductoRepository`, `XmlProductoRepository`) solo se encargan de *cómo* se lee y se escribe cada formato.
+- Tres **clases concretas** (`CsvProductoRepository`, `JsonProductoRepository`, `XmlProductoRepository`) solo se encargan de *cómo* se lee y se escribe cada formato.
 - Un fichero de configuración (`app.properties`) y una clase (`AppConfiguration`) deciden qué formato usar.
 
 ```
@@ -248,7 +248,7 @@ public AbstractRepository(Path path) {
 
 ## 8. Los tres repositorios concretos
 
-### 8.1 `CsvRepository`
+### 8.1 `CsvProductoRepository`
 
 **Formatos de Commons CSV:**
 
@@ -359,7 +359,7 @@ Eso es exactamente lo que hay ahora en `productos.csv`. Si se ejecuta una segund
 4. Llama a `saveAll(productos)`, que en este caso es la versión de `JsonProductoRepository`.
 5. `JsonProductoRepository` escribe el temporal y lo mueve sobre `productos.json`.
 
-Si el repositorio fuera `CsvRepository` o `XmlProductoRepository`, los pasos 1 a 3 serían idénticos y solo cambiaría el paso 4. Esa es la ventaja de este diseño.
+Si el repositorio fuera `CsvProductoRepository` o `XmlProductoRepository`, los pasos 1 a 3 serían idénticos y solo cambiaría el paso 4. Esa es la ventaja de este diseño.
 
 ---
 
@@ -391,7 +391,7 @@ Los inicializadores de campo se ejecutan justo después de `super(...)` y antes 
 
 **5. `AppConfiguration` solo soporta JSON.** Si `storage.format` fuera `csv` o `xml`, `repository` se queda en `null`. Además `props.getProperty("storage.format").equals("json")` falla con `NullPointerException` si falta la clave. Es más seguro `"json".equals(...)` y un `switch` con los tres formatos y un `default` que lance un error claro. Tampoco se usa el repositorio después de crearlo.
 
-**6. `CsvRepository` tiene el constructor sin `public`.** `JsonProductoRepository` y `XmlProductoRepository` sí lo tienen público. Desde `AppConfiguration` (otro paquete) no se podría crear un `CsvRepository`.
+**6. `CsvProductoRepository` tiene el constructor sin `public`.** `JsonProductoRepository` y `XmlProductoRepository` sí lo tienen público. Desde `AppConfiguration` (otro paquete) no se podría crear un `CsvProductoRepository`.
 
 **7. `CsvRepository.load()` no vacía la lista antes de cargar.** JSON y XML hacen `productos.clear()`; CSV solo añade. Si se llamara a `load()` dos veces, los productos saldrían duplicados. Además, ignora los `IOException` en silencio, así que un fallo de lectura parecería un catálogo vacío.
 

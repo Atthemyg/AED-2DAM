@@ -14,7 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
-public class CsvRepository extends AbstractFileRepository<Producto, Long> implements IProductoRepository {
+public class CsvProductoRepository extends AbstractFileRepository<Producto, Long> implements IProductoRepository {
 
     private final CSVFormat inputFormat = CSVFormat.DEFAULT.builder()
             .setHeader()
@@ -24,7 +24,7 @@ public class CsvRepository extends AbstractFileRepository<Producto, Long> implem
             .setHeader("id", "nombre", "precio")
             .get();
 
-    public CsvRepository(Path path) {
+    public CsvProductoRepository(Path path) {
         super(path);
     }
 
