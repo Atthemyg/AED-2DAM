@@ -5,7 +5,9 @@ import es.codelearnacademy.filelab.model.Producto;
 import es.codelearnacademy.filelab.repository.AbstractFileRepository;
 import es.codelearnacademy.filelab.repository.IProductoRepository;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductoJsonRepository
@@ -32,6 +34,9 @@ public class ProductoJsonRepository
     // Como el JSON contiene directamente un array de productos, Jackson puede convertirlo directamente a una lista
     @Override
     protected List<Producto> readAll() throws IOException {
+        if (Files.notExists(path)) { // Fichero todavía sin crear: no hay datos
+            return new ArrayList<>();
+        }
         return mapper.readValue(  // Lee el contenido del fichero y conviértelo a objetos Java
                 path.toFile(), // Convierte el Path que tenemos en un File, que es una forma que ObjectMapper puede utilizar para leer el archivo
                 mapper.getTypeFactory().constructCollectionType(List.class, Producto.class)); // Le indicamos a Jackson que queremos una lista cuyos elementos son objetos Producto

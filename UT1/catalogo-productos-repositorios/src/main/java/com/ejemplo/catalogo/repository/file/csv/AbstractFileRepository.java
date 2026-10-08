@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class AbstractFileRepository <T extends Identificable<ID>, ID>
-        implements IRepository<T, ID> {
+            {
     Path path;
     List<T> list;
 
