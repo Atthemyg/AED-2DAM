@@ -45,23 +45,25 @@ SELECT COUNT(*) AS total_vehiculos FROM Vehiculos;
 
 -- EJERCICIO 11
 -- Obtener precio mínimo, máximo y medio.
-SELECT ...;
+SELECT MIN(precio) AS minimo,
+MAX(precio) AS maximo,
+ROUND(AVG(precio), 2) AS media FROM Productos;
 
 -- EJERCICIO 12
 -- Contar las marcas diferentes.
-SELECT ...;
+SELECT COUNT(DISTINCT marca) AS marcas_diferentes FROM Vehiculos;
 
 -- EJERCICIO 13
 -- Calcular la suma de todos los precios del catálogo.
-SELECT ...;
+SELECT ROUND(SUM(precio), 2) AS suma_precios FROM Productos;
 
 -- EJERCICIO 14
 -- Contar productos con precio de al menos 50.
-SELECT ...;
+SELECT COUNT(*) AS productos_caros FROM Productos WHERE precio >= 50;
 
 -- EJERCICIO 15
 -- Contar vehículos de cada marca.
-SELECT ...;
+SELECT marca, COUNT(*) AS cantidad FROM vehiculos GROUP BY marca ORDER BY marca;
 
 -- EJERCICIO 16
 -- Encontrar los años de fabricación con más vehículos.
