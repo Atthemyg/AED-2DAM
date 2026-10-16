@@ -6,22 +6,25 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 /** Abre una conexión en la base SQLite indicada por el constructor. */
 public class ConexionBD {
-    private  String url;
 
-    //Verificar url con path y files
+    private final String url;
+
+    // Verifica la url con Path y Files: SQLite crearía un fichero vacío si no existiera
     public ConexionBD(String url) {
         this.url = url;
-        Path path = Path.of(url);
+        Path path = Path.of(url.replace("jdbc:sqlite:", ""));
+        if (!Files.exists(path)) {
+            throw new AplicationException("No existe la base de datos: " + path);
+        }
     }
 
-    //Abrir conexion
+    // Abrir conexión
     public Connection obtenerConexion() {
-        try (Connection connection = DriverManager.getConnection(url)) {
-            return connection;
+        try {
+            return DriverManager.getConnection(url);
         } catch (SQLException e) {
             throw new AplicationException("Error conectando con SQLite", e);
         }
