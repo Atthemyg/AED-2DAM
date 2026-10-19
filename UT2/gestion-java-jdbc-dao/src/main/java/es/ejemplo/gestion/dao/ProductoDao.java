@@ -12,19 +12,29 @@ import java.util.List;
 import java.util.Optional;
 
 
-public class ProductoDao extends ConexionBD{
+public class ProductoDao extends AbstractDao {
     //private  ConexionBD conexionBD;
 
     public ProductoDao(String url) {
         super(url);
     }
 
+    @Override
+    Producto mapToClass(ResultSet rs) {
+        try {
+            return new Producto(rs.getInt(1), rs.getString(2),rs.getDouble(3) );
+        } catch (Exception e) {
+            throw new AplicationException(e.getMessage(), e.getCause());
+        }
+    }
+
     // Lo primero de todo crear lista por si falla devolver lista vacia
     public List<Producto> listar() {
-        List<Producto> lista = new ArrayList<>();
+        //List<Producto> lista = new ArrayList<>();
         String query = "select id,nombre,precio from productos order by id";
+        return consultar(query);
 
-        try (Connection connection = this.obtenerConexion()){
+        /*try (Connection connection = this.obtenerConexion()){
 
             PreparedStatement ps = connection.prepareStatement(query);
 
@@ -36,20 +46,8 @@ public class ProductoDao extends ConexionBD{
         } catch (Exception e) {
             throw new AplicationException(e.getMessage(), e);
         }
-        //conexion
-        // sql
-        // preparateStatement
-        //ResultSet rs
-        //rs.next
-        /**
-         * while(rs.next()) {
-         * producto = new Producto(rs.get(id). rs.get())
-         *
-         * }
-         *
-         *
-         */
-        return lista;
+
+        return lista;*/
     }
 
     public Optional<Producto> buscarPorId(int id) {

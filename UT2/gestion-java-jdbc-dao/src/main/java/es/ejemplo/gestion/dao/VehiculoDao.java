@@ -2,6 +2,7 @@ package es.ejemplo.gestion.dao;
 
 import es.ejemplo.gestion.config.ConexionBD;
 import es.ejemplo.gestion.exception.AplicationException;
+import es.ejemplo.gestion.model.Producto;
 import es.ejemplo.gestion.model.Vehiculo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,18 +15,23 @@ import java.util.Map;
 import java.util.Optional;
 
 
-public class VehiculoDao extends ConexionBD {
+public class VehiculoDao extends AbstractDao<Vehiculo> {
 
     public VehiculoDao(String url) {
         super(url);
     }
 
+    @Override
+    Vehiculo mapToClass(ResultSet rs) {
+        return null;
+    }
+
     // Lo primero de todo crear lista por si falla devolver lista vacia
     public List<Vehiculo> listar() {
-        List<Vehiculo> lista = new ArrayList<>();
+        //List<Vehiculo> lista = new ArrayList<>();
         String query = "select matricula,marca,modelo,anio from vehiculos order by matricula";
-
-        try (Connection connection = this.obtenerConexion()) {
+        return consultar(query);
+        /*try (Connection connection = this.obtenerConexion()) {
 
             PreparedStatement ps = connection.prepareStatement(query);
 
@@ -37,7 +43,7 @@ public class VehiculoDao extends ConexionBD {
         } catch (Exception e) {
             throw new AplicationException(e.getMessage(), e);
         }
-        return lista;
+        return lista;*/
     }
 
     public Optional<Vehiculo> buscarPorMatricula(String matricula) {
