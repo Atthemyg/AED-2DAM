@@ -93,6 +93,7 @@ public class VehiculoDao extends AbstractDao<Vehiculo> {
         }
     }
 
+    //Revisar lo del LIKE
     public List<Vehiculo> buscarPorMarca(String texto) {
         if (texto == null) return List.of();
         String sql = "SELECT matricula,marca,modelo,anio FROM Vehiculos "

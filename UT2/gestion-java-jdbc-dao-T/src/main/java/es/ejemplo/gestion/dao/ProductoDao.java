@@ -63,6 +63,8 @@ public class ProductoDao extends AbstractDao<Producto> {
         String sql = "INSERT INTO Productos (id,nombre,precio) VALUES (?,?,?)";
         try (Connection con = obtenerConexion();
              PreparedStatement ps = con.prepareStatement(sql)) {
+            //con.setAutoCommit(false);
+            //con.rollback();   vuelve al ultimo commit
             ps.setInt(1, p.getId());
             ps.setString(2, p.getNombre());
             ps.setDouble(3, p.getPrecio());
