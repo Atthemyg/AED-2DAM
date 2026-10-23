@@ -30,6 +30,7 @@ SELECT v.matricula, c.nombre
 FROM vehiculos v, clientes c
 WHERE v.id_cliente = c.id_cliente;
 
+
 SELECT v.matricula, c.nombre
 FROM vehiculos v
 INNER JOIN clientes c ON v.id_cliente = c.id_cliente;
@@ -58,14 +59,12 @@ GROUP BY r.id_reparacion
 ORDER BY r.id_reparacion;
 
 
-
 SELECT r.id_reparacion,
        TOTAL(p.cantidad * p.precio_unitario) AS coste_piezas
 FROM reparaciones r
          LEFT JOIN piezas_reparacion p ON p.id_reparacion = r.id_reparacion
 GROUP BY r.id_reparacion
 ORDER BY r.id_reparacion;
-
 
 
 SELECT r.id_reparacion,

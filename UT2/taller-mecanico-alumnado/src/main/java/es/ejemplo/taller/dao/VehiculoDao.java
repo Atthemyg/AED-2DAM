@@ -50,7 +50,6 @@ public class VehiculoDao extends ConexionBD {
         return Optional.empty();
     }
 
-    // La matrícula la aporta el objeto: devuelve 1 si se inserta, 0 si se rechaza o falla
     public int insertar(Vehiculo dato) {
         if (!esValido(dato)) {
             return 0;
