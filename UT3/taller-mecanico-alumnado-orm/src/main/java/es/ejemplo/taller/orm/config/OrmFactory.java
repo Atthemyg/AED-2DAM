@@ -5,8 +5,6 @@ import jakarta.persistence.Persistence;
 import java.util.Map;
 
 public final class OrmFactory {
-    //private OrmFactory() {}
-
     public static EntityManagerFactory crear(String jdbcUrl) {
         return Persistence.createEntityManagerFactory(
                 "tallerPU",
