@@ -41,7 +41,6 @@ public class ClienteDao  {
             return em.createQuery("select c from ClienteEntity c where c.email = :email",
                             ClienteEntity.class).setParameter("email", email).getResultStream().
                     findFirst().map(ClienteMapper::toDomain);
-
         }
     }
 

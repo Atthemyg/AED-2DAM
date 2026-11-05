@@ -28,6 +28,14 @@ public class VehiculoEntity {
     protected VehiculoEntity() {
     }
 
+    public VehiculoEntity(String matricula, String marca, String modelo, Integer anio, Integer idCliente) {
+        this.matricula = matricula;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.anio = anio;
+        this.idCliente = idCliente;
+    }
+
     public String getMatricula() {
         return matricula;
     }
