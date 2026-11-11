@@ -383,7 +383,7 @@ public class LibroDao implements AutoCloseable {
      */
     public List<Object[]> estadisticasGenero() {
         try (var em = managerFactory.createEntityManager()) {
-            return em.createQuery("select l.genero, count(l), sum(l.ejemplares),"
+            return em.createQuery("select l.genero, count(l), sum(l.ejempla665res),"
                                     + " (select count(p) from PrestamoEntity p"
                                     + " join LibroEntity x on x.idLibro = p.idLibro"
                                     + " where x.genero = l.genero),"
