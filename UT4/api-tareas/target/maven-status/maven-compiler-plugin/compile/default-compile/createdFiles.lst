@@ -1,5 +1,7 @@
-aula/tareas/TareaService.class
-aula/tareas/TareaController$NuevaTarea.class
-aula/tareas/TareaController.class
-aula/tareas/Tarea.class
+aula/tareas/repository/TareaRepository.class
+aula/tareas/service/TareaService.class
+aula/tareas/controller/TareaController$NuevaTarea.class
+aula/tareas/controller/TareaController.class
+aula/tareas/modelo/Tarea.class
 aula/tareas/TareasApplication.class
+aula/tareas/repository/ITareaRepository.class

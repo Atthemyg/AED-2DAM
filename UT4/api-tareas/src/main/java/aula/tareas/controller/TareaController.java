@@ -1,7 +1,11 @@
-package aula.tareas;
+package aula.tareas.controller;
 
 import java.net.URI;
 import java.util.List;
+
+
+import aula.tareas.modelo.Tarea;
+import aula.tareas.service.TareaService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.ResponseEntity;
