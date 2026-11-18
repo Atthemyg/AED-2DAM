@@ -1,6 +1,11 @@
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/TareasApplication.java
-/home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/controller/TareaController.java
+/home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/controller/TareaControllerCsv.java
+/home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/controller/TareaControllerJson.java
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/modelo/Tarea.java
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/repository/ITareaRepository.java
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/repository/TareaRepository.java
-/home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/service/TareaService.java
+/home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/repository/TareaRepositoryCsv.java
+/home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/repository/TareaRepositoryJson.java
+/home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/service/ITareaService.java
+/home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/service/TareaServiceCsv.java
+/home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/service/TareaServiceJson.java

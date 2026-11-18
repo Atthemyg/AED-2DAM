@@ -4,6 +4,8 @@ import aula.tareas.modelo.Tarea;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Repository;
 
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
@@ -12,22 +14,19 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TareaRepositoryCsv implements ITareaRepository {
-
-    private Path path;
-
+@Repository("repositoryCsv")
+public class TareaRepositoryCsv implements ITareaRepository{
+    private  Path path;
     private final CSVFormat inputFormat = CSVFormat.DEFAULT.builder()
             .setHeader()
-            .setSkipHeaderRecord(true)
-            .build();
-
-    public TareaRepositoryCsv() {
-        path = Path.of("data", "tareas.csv");
-    }
-
+            .setSkipHeaderRecord(true).build();
     private final CSVFormat outputFormat = CSVFormat.DEFAULT.builder()
             .setHeader("id", "titulo")
             .build();
+
+    public TareaRepositoryCsv() {
+        path = Path.of("data", "tarea.csv");
+    }
 
     @Override
     public Tarea create(String titulo) {
@@ -55,9 +54,10 @@ public class TareaRepositoryCsv implements ITareaRepository {
                 }
             }
             return result;
-        } catch (Exception e) {
+        }catch (Exception e) {
             return List.of();
         }
+
     }
 
     @Override
