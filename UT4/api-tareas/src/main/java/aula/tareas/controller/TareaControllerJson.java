@@ -41,8 +41,7 @@ public class TareaControllerJson {
             @ApiResponse(responseCode = "404", description = "Tarea no encontrada")
     })
     ResponseEntity<Tarea> buscar(@PathVariable long id) {
-        //return ResponseEntity.ofNullable(servicio.buscar(id));
-        return null;
+        return ResponseEntity.ofNullable(serviceJson.buscar(id));
     }
 
     @PostMapping

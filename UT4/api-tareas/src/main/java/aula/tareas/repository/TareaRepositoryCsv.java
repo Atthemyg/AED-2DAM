@@ -13,10 +13,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Repository("repositoryCsv")
 public class TareaRepositoryCsv implements ITareaRepository{
     private  Path path;
+    private final AtomicLong secuencia = new AtomicLong();
+    private final List<Tarea> tareas = new ArrayList<>();
+
     private final CSVFormat inputFormat = CSVFormat.DEFAULT.builder()
             .setHeader()
             .setSkipHeaderRecord(true).build();
@@ -30,11 +34,20 @@ public class TareaRepositoryCsv implements ITareaRepository{
 
     @Override
     public Tarea create(String titulo) {
-        return null;
+        long id = secuencia.incrementAndGet();
+        Tarea tarea = new Tarea(id, titulo.strip());
+        tareas.add(tarea);
+        return tarea;
     }
 
     @Override
     public boolean delete(long identificador) {
+        for (int i = 0; i < tareas.size(); i++) {
+            if (tareas.get(i).id() == identificador) {
+                tareas.remove(i);
+                return true;
+            }
+        }
         return false;
     }
 
@@ -62,11 +75,23 @@ public class TareaRepositoryCsv implements ITareaRepository{
 
     @Override
     public Tarea findById(long identificador) {
+        for (Tarea tarea : tareas) {
+            if (tarea.id() == identificador) {
+                return tarea;
+            }
+        }
         return null;
     }
 
     @Override
     public Tarea update(Tarea tarea) {
+        for (int i = 0; i < tareas.size(); i++) {
+            if (tareas.get(i).id() == tarea.id()) {
+                Tarea actualizada = new Tarea(tarea.id(), tarea.titulo().strip());
+                tareas.set(i, actualizada);
+                return actualizada;
+            }
+        }
         return null;
     }
 }

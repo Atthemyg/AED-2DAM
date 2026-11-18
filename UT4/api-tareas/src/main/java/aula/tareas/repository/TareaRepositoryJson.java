@@ -60,6 +60,13 @@ public class TareaRepositoryJson implements ITareaRepository {
 
     @Override
     public boolean delete(long identificador) {
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).id() == identificador) {
+                lista.remove(i);
+                saveAll(lista);
+                return true;
+            }
+        }
         return false;
     }
 
@@ -70,11 +77,24 @@ public class TareaRepositoryJson implements ITareaRepository {
 
     @Override
     public Tarea findById(long identificador) {
+        for (Tarea tarea : lista) {
+            if (tarea.id() == identificador) {
+                return tarea;
+            }
+        }
         return null;
     }
 
     @Override
     public Tarea update(Tarea tarea) {
+        for (int i = 0; i < lista.size(); i++) {
+            if (lista.get(i).id() == tarea.id()) {
+                Tarea actualizada = new Tarea(tarea.id(), tarea.titulo().strip());
+                lista.set(i, actualizada);
+                saveAll(lista);
+                return actualizada;
+            }
+        }
         return null;
     }
 

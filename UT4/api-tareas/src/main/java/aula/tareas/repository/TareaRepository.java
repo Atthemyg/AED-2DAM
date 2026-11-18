@@ -38,9 +38,9 @@ public class TareaRepository implements ITareaRepository{
 
     @Override
     public Tarea update(Tarea tarea) {
-        // buscar la tarea por el id
-        // actualizar la tarea
-        return null;
+        var actualizada = new Tarea(tarea.id(), tarea.titulo().strip());
+        tareas.put(actualizada.id(), actualizada);
+        return actualizada;
     }
 
 }

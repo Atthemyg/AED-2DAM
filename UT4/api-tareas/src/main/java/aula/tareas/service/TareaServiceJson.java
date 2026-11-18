@@ -23,11 +23,25 @@ public class TareaServiceJson implements ITareaService {
 
     @Override
     public Tarea buscar(long id) {
-        return null;
+        return tareaRepositoryJson.findById(id);
     }
 
     @Override
     public Tarea crear(String titulo) {
-        return tareaRepositoryJson.create(titulo);
+        if (titulo == null || titulo.isBlank()) {
+            return null;
+        }
+            return tareaRepositoryJson.create(titulo);
+    }
+
+    public Tarea actualizar(long id, String titulo) {
+        if (titulo == null || titulo.isBlank()) {
+            return null;
+        }
+        return tareaRepositoryJson.update(new Tarea(id, titulo));
+    }
+
+    public boolean borrar(long id) {
+        return tareaRepositoryJson.delete(id);
     }
 }
