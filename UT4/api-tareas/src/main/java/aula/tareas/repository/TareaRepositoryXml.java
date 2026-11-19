@@ -1,6 +1,6 @@
 package aula.tareas.repository;
 
-import aula.tareas.modelo.Tarea;
+import aula.tareas.api.TareaRequest;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -10,12 +10,12 @@ import java.util.concurrent.atomic.AtomicLong;
 @Repository("repositoryXml")
 public class TareaRepositoryXml implements ITareaRepository {
     private final AtomicLong secuencia = new AtomicLong();
-    private List<Tarea> lista = new ArrayList<>();
+    private List<TareaRequest> lista = new ArrayList<>();
 
     @Override
-    public Tarea create(String titulo) {
+    public TareaRequest create(String titulo) {
         long id = secuencia.incrementAndGet();
-        var tarea = new Tarea(id, titulo.strip());
+        var tarea = new TareaRequest(id, titulo.strip());
         lista.add(tarea);
         return tarea;
     }
@@ -32,25 +32,25 @@ public class TareaRepositoryXml implements ITareaRepository {
     }
 
     @Override
-    public List<Tarea> findAll() {
+    public List<TareaRequest> findAll() {
         return List.copyOf(lista);
     }
 
     @Override
-    public Tarea findById(long identificador) {
-        for (Tarea tarea : lista) {
-            if (tarea.id() == identificador) {
-                return tarea;
+    public TareaRequest findById(long identificador) {
+        for (TareaRequest tareaRequest : lista) {
+            if (tareaRequest.id() == identificador) {
+                return tareaRequest;
             }
         }
         return null;
     }
 
     @Override
-    public Tarea update(Tarea tarea) {
+    public TareaRequest update(TareaRequest tareaRequest) {
         for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).id() == tarea.id()) {
-                Tarea actualizada = new Tarea(tarea.id(), tarea.titulo().strip());
+            if (lista.get(i).id() == tareaRequest.id()) {
+                TareaRequest actualizada = new TareaRequest(tareaRequest.id(), tareaRequest.titulo().strip());
                 lista.set(i, actualizada);
                 return actualizada;
             }

@@ -1,10 +1,9 @@
 package aula.tareas.repository;
 
-import aula.tareas.modelo.Tarea;
+import aula.tareas.api.TareaRequest;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 import java.io.Reader;
@@ -19,7 +18,7 @@ import java.util.concurrent.atomic.AtomicLong;
 public class TareaRepositoryCsv implements ITareaRepository{
     private  Path path;
     private final AtomicLong secuencia = new AtomicLong();
-    private final List<Tarea> tareas = new ArrayList<>();
+    private final List<TareaRequest> tareaRequests = new ArrayList<>();
 
     private final CSVFormat inputFormat = CSVFormat.DEFAULT.builder()
             .setHeader()
@@ -33,18 +32,18 @@ public class TareaRepositoryCsv implements ITareaRepository{
     }
 
     @Override
-    public Tarea create(String titulo) {
+    public TareaRequest create(String titulo) {
         long id = secuencia.incrementAndGet();
-        Tarea tarea = new Tarea(id, titulo.strip());
-        tareas.add(tarea);
-        return tarea;
+        TareaRequest tareaRequest = new TareaRequest(id, titulo.strip());
+        tareaRequests.add(tareaRequest);
+        return tareaRequest;
     }
 
     @Override
     public boolean delete(long identificador) {
-        for (int i = 0; i < tareas.size(); i++) {
-            if (tareas.get(i).id() == identificador) {
-                tareas.remove(i);
+        for (int i = 0; i < tareaRequests.size(); i++) {
+            if (tareaRequests.get(i).id() == identificador) {
+                tareaRequests.remove(i);
                 return true;
             }
         }
@@ -52,16 +51,16 @@ public class TareaRepositoryCsv implements ITareaRepository{
     }
 
     @Override
-    public List<Tarea> findAll() {
+    public List<TareaRequest> findAll() {
         if (Files.notExists(path)) {
             return new ArrayList<>();
         }
         try {
-            List<Tarea> result = new ArrayList<>();
+            List<TareaRequest> result = new ArrayList<>();
             try (Reader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
                  CSVParser parser = inputFormat.parse(reader)) {
                 for (CSVRecord row : parser) {
-                    result.add(new Tarea(
+                    result.add(new TareaRequest(
                             Long.parseLong(row.get("id")),
                             row.get("titulo")));
                 }
@@ -74,21 +73,21 @@ public class TareaRepositoryCsv implements ITareaRepository{
     }
 
     @Override
-    public Tarea findById(long identificador) {
-        for (Tarea tarea : tareas) {
-            if (tarea.id() == identificador) {
-                return tarea;
+    public TareaRequest findById(long identificador) {
+        for (TareaRequest tareaRequest : tareaRequests) {
+            if (tareaRequest.id() == identificador) {
+                return tareaRequest;
             }
         }
         return null;
     }
 
     @Override
-    public Tarea update(Tarea tarea) {
-        for (int i = 0; i < tareas.size(); i++) {
-            if (tareas.get(i).id() == tarea.id()) {
-                Tarea actualizada = new Tarea(tarea.id(), tarea.titulo().strip());
-                tareas.set(i, actualizada);
+    public TareaRequest update(TareaRequest tareaRequest) {
+        for (int i = 0; i < tareaRequests.size(); i++) {
+            if (tareaRequests.get(i).id() == tareaRequest.id()) {
+                TareaRequest actualizada = new TareaRequest(tareaRequest.id(), tareaRequest.titulo().strip());
+                tareaRequests.set(i, actualizada);
                 return actualizada;
             }
         }

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.atomic.AtomicLong;
 
-import aula.tareas.modelo.Tarea;
+import aula.tareas.api.TareaRequest;
 import aula.tareas.repository.ITareaRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service("tareaServiceCsv")
 public class TareaServiceCsv implements ITareaService {
     private final AtomicLong secuencia = new AtomicLong();
-    private final ConcurrentSkipListMap<Long, Tarea> tareas = new ConcurrentSkipListMap<>();
+    private final ConcurrentSkipListMap<Long, TareaRequest> tareas = new ConcurrentSkipListMap<>();
     private final ITareaRepository repository;
 
     //El pasado
@@ -28,26 +28,26 @@ public class TareaServiceCsv implements ITareaService {
     }
 
 
-    public List<Tarea> listar() {
+    public List<TareaRequest> listar() {
         return repository.findAll();
     }
 
-    public Tarea buscar(long id) {
+    public TareaRequest buscar(long id) {
         return repository.findById(id);
     }
 
-    public Tarea crear(String titulo) {
+    public TareaRequest crear(String titulo) {
         if (titulo == null || titulo.isBlank()) {
             return null;
         }
         return repository.create(titulo);
     }
 
-    public Tarea actualizar(long id, String titulo) {
+    public TareaRequest actualizar(long id, String titulo) {
         if (titulo == null || titulo.isBlank()) {
             return null;
         }
-        return repository.update(new Tarea(id, titulo));
+        return repository.update(new TareaRequest(id, titulo));
     }
 
     public boolean borrar(long id) {
