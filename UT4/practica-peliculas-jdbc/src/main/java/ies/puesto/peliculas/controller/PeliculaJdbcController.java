@@ -49,7 +49,7 @@ public class PeliculaJdbcController {
             @ApiResponse(responseCode = "400", description = "Código inválido"),
             @ApiResponse(responseCode = "404", description = "La película no existe")
     })
-    public ResponseEntity<?> obtener(@PathVariable @Pattern(regexp = "^PEL[0-9]{3}$") String codigo) {
+    public ResponseEntity<Object> obtener(@PathVariable @Pattern(regexp = "^PEL[0-9]{3}$") String codigo) {
         Optional<Pelicula> pelicula = service.obtener(codigo);
         if (pelicula.isEmpty()) {
             return noExiste(codigo);
@@ -64,7 +64,7 @@ public class PeliculaJdbcController {
             @ApiResponse(responseCode = "400", description = "Cuerpo inválido"),
             @ApiResponse(responseCode = "409", description = "El código ya existe")
     })
-    public ResponseEntity<?> crear(@Valid @RequestBody PeliculaRequest peticion) {
+    public ResponseEntity<Object> crear(@Valid @RequestBody PeliculaRequest peticion) {
         Optional<Pelicula> pelicula = service.crear(mapper.aDatosCreacion(peticion));
         if (pelicula.isEmpty()) {
             ProblemDetail error = ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT,
@@ -81,11 +81,11 @@ public class PeliculaJdbcController {
             @ApiResponse(responseCode = "400", description = "Código o cuerpo inválido"),
             @ApiResponse(responseCode = "404", description = "La película no existe")
     })
-    public ResponseEntity<?> actualizar(@PathVariable @Pattern(regexp = "^PEL[0-9]{3}$") String codigo,
-                                        @Valid @RequestBody PeliculaEdicionRequest peticion) {
+    public ResponseEntity<Object> actualizar(@PathVariable @Pattern(regexp = "^PEL[0-9]{3}$") String codigo,
+                                             @Valid @RequestBody PeliculaEdicionRequest peticion) {
         Optional<Pelicula> pelicula = service.actualizar(codigo, mapper.aDatosEdicion(peticion));
         if (pelicula.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pelicula);
+            return noExiste(codigo);
         }
         return ResponseEntity.ok(mapper.aRespuesta(pelicula.get()));
     }
@@ -97,14 +97,14 @@ public class PeliculaJdbcController {
             @ApiResponse(responseCode = "400", description = "Código inválido"),
             @ApiResponse(responseCode = "404", description = "La película no existe")
     })
-    public ResponseEntity<?> eliminar(@PathVariable @Pattern(regexp = "^PEL[0-9]{3}$") String codigo) {
+    public ResponseEntity<Object> eliminar(@PathVariable @Pattern(regexp = "^PEL[0-9]{3}$") String codigo) {
         if (!service.eliminar(codigo)) {
             return noExiste(codigo);
         }
         return ResponseEntity.noContent().build();
     }
 
-    private ResponseEntity<ProblemDetail> noExiste(String codigo) {
+    private ResponseEntity<Object> noExiste(String codigo) {
         ProblemDetail error = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND,
                 "No existe la película " + codigo);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);

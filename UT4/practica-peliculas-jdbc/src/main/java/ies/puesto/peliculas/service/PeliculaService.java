@@ -31,12 +31,18 @@ public class PeliculaService {
 
     public Optional<Pelicula> crear(DatosCreacionPelicula datos) {
         Pelicula pelicula = mapper.aPelicula(datos);
-        return repositorio.insertarSiAusente(pelicula) ? Optional.of(pelicula) : Optional.empty();
+        if (repositorio.insertarSiAusente(pelicula)) {
+            return Optional.of(pelicula);
+        }
+        return Optional.empty();
     }
 
     public Optional<Pelicula> actualizar(String codigo, DatosEdicionPelicula datos) {
         Pelicula pelicula = mapper.aPelicula(codigo, datos);
-        return repositorio.actualizarSiExiste(pelicula) ? Optional.of(pelicula) : Optional.empty();
+        if (repositorio.actualizarSiExiste(pelicula)) {
+            return Optional.of(pelicula);
+        }
+        return Optional.empty();
     }
 
     public boolean eliminar(String codigo) {
