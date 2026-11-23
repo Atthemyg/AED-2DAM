@@ -85,7 +85,7 @@ public class PeliculaJdbcController {
                                         @Valid @RequestBody PeliculaEdicionRequest peticion) {
         Optional<Pelicula> pelicula = service.actualizar(codigo, mapper.aDatosEdicion(peticion));
         if (pelicula.isEmpty()) {
-            return noExiste(codigo);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(pelicula);
         }
         return ResponseEntity.ok(mapper.aRespuesta(pelicula.get()));
     }

@@ -2,27 +2,31 @@ package aula.tareas.modelo;
 
 public class Tarea {
 
-    private long id;
-    private String titulo;
+    private long identificador;
+    private String title;
 
-    public Tarea(long id, String titulo) {
-        this.id = id;
-        this.titulo = titulo;
+    public Tarea(long id) {
+        this.identificador = id;
     }
 
-    public long getId() {
-        return id;
+    public Tarea(long id, String title) {
+        this.identificador = id;
+        this.title = title;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public long getIdentificador() {
+        return identificador;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public void setIdentificador(long identificador) {
+        this.identificador = identificador;
     }
 
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

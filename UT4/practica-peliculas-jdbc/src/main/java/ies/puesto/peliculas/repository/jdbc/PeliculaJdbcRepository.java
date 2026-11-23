@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+//JdbcTemplate jdbc,
 @Repository
 @Profile("jdbc")
 public class PeliculaJdbcRepository implements PeliculaRepository {
