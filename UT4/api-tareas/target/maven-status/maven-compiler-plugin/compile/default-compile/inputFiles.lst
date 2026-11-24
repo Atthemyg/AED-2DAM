@@ -4,6 +4,7 @@
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/controller/TareaControllerJdbc.java
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/controller/TareaControllerJson.java
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/controller/TareaControllerXml.java
+/home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/entity/TareaEntity.java
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/entity/TareaEntityJdbc.java
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/mapper/TareaMapperJdbc.java
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/modelo/Tarea.java
@@ -11,10 +12,13 @@
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/repository/TareaRepository.java
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/repository/TareaRepositoryCsv.java
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/repository/TareaRepositoryJdbc.java
+/home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/repository/TareaRepositoryJpa.java
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/repository/TareaRepositoryJson.java
+/home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/repository/TareaRepositoryOrm.java
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/repository/TareaRepositoryXml.java
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/service/ITareaService.java
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/service/TareaServiceCsv.java
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/service/TareaServiceJdbc.java
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/service/TareaServiceJson.java
+/home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/service/TareaServiceOrm.java
 /home/alumno/2DAM-REPOS/AED-2DAM/UT4/api-tareas/src/main/java/aula/tareas/service/TareaServiceXml.java

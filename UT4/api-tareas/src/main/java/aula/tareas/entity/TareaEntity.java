@@ -1,16 +1,25 @@
 package aula.tareas.entity;
 
-//@Entity(name="tarea_orm")
-public class TareaEntityOrm {
+import jakarta.persistence.*;
 
+@Entity(name="tarea_orm")
+public class TareaEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @Column
     private String titulo;
 
-    public TareaEntityOrm(long id) {
+    public TareaEntity() {
+    }
+
+    public TareaEntity(long id) {
         this.id = id;
     }
 
-    public TareaEntityOrm(long id, String titulo) {
+    public TareaEntity(long id, String titulo) {
         this.id = id;
         this.titulo = titulo;
     }

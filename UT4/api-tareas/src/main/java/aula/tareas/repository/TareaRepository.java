@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Repository()
-public class TareaRepository implements ITareaRepository{
+public class TareaRepository implements ITareaRepository {
     private final AtomicLong secuencia = new AtomicLong();
     private final ConcurrentSkipListMap<Long, TareaRequest> tareas = new ConcurrentSkipListMap<>();
 
