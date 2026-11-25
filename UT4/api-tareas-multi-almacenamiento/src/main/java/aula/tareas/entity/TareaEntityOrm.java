@@ -3,13 +3,15 @@ package aula.tareas.entity;
 import jakarta.persistence.*;
 
 @Entity(name="tareaEntityOrm")
+@Table(name = "tareas_orm")
 public class TareaEntityOrm {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long idTarea;
 
-    @Column
+    @Column(name = "titulo")
     private String nombreTarea;
 
     public TareaEntityOrm() {

@@ -2,45 +2,94 @@ package aula.tareas.controller;
 
 import aula.tareas.api.TareaRequest;
 import aula.tareas.api.TareaResponse;
+import aula.tareas.mapper.TareaMapperApi;
+import aula.tareas.modelo.Tarea;
 import aula.tareas.service.ITareaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/xml/tareas")
+@Tag(name = "XML", description = "Gestion de tareas almacenadas con XML")
 public class TareaControllerXml {
+
     private final ITareaService servicio;
 
     public TareaControllerXml(@Qualifier("tareaServiceXml") ITareaService servicio) {
         this.servicio = servicio;
     }
 
-    // TODO: Definir la ruta base /api/xml/tareas.
-
+    @GetMapping
+    @Operation(summary = "Listar las tareas")
+    @ApiResponse(responseCode = "200", description = "Lista de tareas")
     public List<TareaResponse> listar() {
-        // TODO: Exponer el listado y convertir las tareas en respuestas.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        List<TareaResponse> respuestas = new ArrayList<>();
+        for (Tarea tarea : servicio.listar()) {
+            respuestas.add(TareaMapperApi.toResponse(tarea));
+        }
+        return respuestas;
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "Buscar una tarea por ID")
+    @ApiResponse(responseCode = "200", description = "Tarea encontrada")
+    @ApiResponse(responseCode = "404", description = "No existe una tarea con ese ID")
     public ResponseEntity<TareaResponse> buscar(long id) {
-        // TODO: Exponer la consulta por ID y gestionar la ausencia de la tarea.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        Optional<Tarea> tarea = servicio.buscar(id);
+        if (tarea.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(TareaMapperApi.toResponse(tarea.get()));
     }
 
+    @PostMapping
+    @Operation(summary = "Crear una tarea")
+    @ApiResponse(responseCode = "201", description = "Tarea creada")
+    @ApiResponse(responseCode = "400", description = "Titulo en blanco o cuerpo invalido")
     public ResponseEntity<TareaResponse> crear(TareaRequest request) {
-        // TODO: Exponer el alta, validar el cuerpo y componer la respuesta HTTP.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        TareaResponse creada = TareaMapperApi.toResponse(servicio.crear(request));
+        return ResponseEntity.created(URI.create("/api/xml/tareas/" + creada.id())).body(creada);
     }
 
+    @PutMapping("/{id}")
+    @Operation(summary = "Actualizar una tarea")
+    @ApiResponse(responseCode = "200", description = "Tarea actualizada")
+    @ApiResponse(responseCode = "400", description = "Titulo en blanco o cuerpo invalido")
+    @ApiResponse(responseCode = "404", description = "No existe una tarea con ese ID")
     public ResponseEntity<TareaResponse> actualizar(long id, TareaRequest request) {
-        // TODO: Exponer la actualización y validar la petición.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        Optional<Tarea> tarea = servicio.actualizar(id, request);
+        if (tarea.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(TareaMapperApi.toResponse(tarea.get()));
     }
 
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar una tarea")
+    @ApiResponse(responseCode = "204", description = "Tarea eliminada")
+    @ApiResponse(responseCode = "404", description = "No existe una tarea con ese ID")
     public ResponseEntity<Void> eliminar(long id) {
-        // TODO: Exponer el borrado y comunicar el resultado.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        if (servicio.eliminar(id)) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 }

@@ -7,13 +7,11 @@ public final class TareaMapperJson {
     private TareaMapperJson() {}
 
     public static TareaEntityJson toEntity(Tarea tarea) {
-        // TODO: Convertir al tipo de destino.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        return new TareaEntityJson(tarea.identificador(), tarea.nombre());
     }
 
     public static Tarea toDomain(TareaEntityJson entity) {
-        // TODO: Convertir al tipo de destino.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        return new Tarea(entity.getIdTarea(), entity.getNombreTarea());
     }
 
     //SE PUEDE HACER ASI TAMBIEN

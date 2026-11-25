@@ -7,12 +7,10 @@ public final class TareaMapperJdbc {
     private TareaMapperJdbc() {}
 
     public static TareaEntityJdbc toEntity(Tarea tarea) {
-        // TODO: Convertir al tipo de destino.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        return new TareaEntityJdbc(tarea.identificador(), tarea.nombre());
     }
 
     public static Tarea toDomain(TareaEntityJdbc entity) {
-        // TODO: Convertir al tipo de destino.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        return new Tarea(entity.idTarea(), entity.nombreTarea());
     }
 }

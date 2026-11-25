@@ -6,13 +6,13 @@ import aula.tareas.modelo.Tarea;
 public final class TareaMapperServicio {
     private TareaMapperServicio() {}
 
+    // Identificador queda nulo para que lo asigne el almacenamiento
     public static Tarea toDomain(TareaRequest request) {
-        // TODO: Convertir al tipo de destino.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        return new Tarea(null, request.titulo());
     }
 
+    // Identificador de la URL manda sobre el del cuerpo
     public static Tarea toDomain(long id, TareaRequest request) {
-        // TODO: Convertir al tipo de destino.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        return new Tarea(id, request.titulo());
     }
 }

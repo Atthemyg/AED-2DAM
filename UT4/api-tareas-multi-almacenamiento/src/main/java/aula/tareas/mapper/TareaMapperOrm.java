@@ -7,12 +7,10 @@ public final class TareaMapperOrm {
     private TareaMapperOrm() {}
 
     public static TareaEntityOrm toEntity(Tarea tarea) {
-        // TODO: Convertir al tipo de destino.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        return new TareaEntityOrm(tarea.identificador(), tarea.nombre());
     }
 
     public static Tarea toDomain(TareaEntityOrm entity) {
-        // TODO: Convertir al tipo de destino.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        return new Tarea(entity.getIdTarea(), entity.getNombreTarea());
     }
 }

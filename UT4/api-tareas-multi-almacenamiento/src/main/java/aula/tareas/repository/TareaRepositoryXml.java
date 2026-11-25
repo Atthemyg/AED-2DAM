@@ -1,6 +1,7 @@
 package aula.tareas.repository;
 
 import aula.tareas.entity.TareaEntityXml;
+import aula.tareas.mapper.TareaMapperXml;
 import aula.tareas.modelo.Tarea;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -8,7 +9,10 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import tools.jackson.dataformat.xml.XmlMapper;
 import tools.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty;
+
+import java.io.File;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -50,13 +54,25 @@ public class TareaRepositoryXml extends RepositorioTareaFichero {
 
     @Override
     List<Tarea> readAll() {
-        // TODO: Leer el documento XML y recuperar sus tareas.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        List<Tarea> result = new ArrayList<>();
+        if (path.toFile().length() == 0) {
+            return result;
+        }
+        DocumentoXml documento = mapper.readValue(path.toFile(), DocumentoXml.class);
+        if (documento.getTareas() != null) {
+            for (TareaEntityXml entity : documento.getTareas()) {
+                result.add(TareaMapperXml.toDomain(entity));
+            }
+        }
+        return result;
     }
 
     @Override
     void writeAll(List<Tarea> tareas) {
-        // TODO: Convertir las tareas y escribir el documento XML.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        DocumentoXml documento = new DocumentoXml(new ArrayList<>());
+        for (Tarea tarea : tareas) {
+            documento.getTareas().add(TareaMapperXml.toEntity(tarea));
+        }
+        mapper.writeValue(path.toFile(), documento);
     }
 }

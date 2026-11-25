@@ -7,12 +7,10 @@ public final class TareaMapperCsv {
     private TareaMapperCsv() {}
 
     public static TareaEntityCsv toEntity(Tarea tarea) {
-        // TODO: Convertir al tipo de destino.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        return new TareaEntityCsv(tarea.identificador(), tarea.nombre());
     }
 
     public static Tarea toDomain(TareaEntityCsv entity) {
-        // TODO: Convertir al tipo de destino.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        return new Tarea(entity.getIdTarea(), entity.getNombreTarea());
     }
 }

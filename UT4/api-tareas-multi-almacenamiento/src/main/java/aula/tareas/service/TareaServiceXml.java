@@ -1,6 +1,7 @@
 package aula.tareas.service;
 
 import aula.tareas.api.TareaRequest;
+import aula.tareas.mapper.TareaMapperServicio;
 import aula.tareas.modelo.Tarea;
 import aula.tareas.repository.ITareaRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,31 +20,28 @@ public class TareaServiceXml implements ITareaService {
 
     @Override
     public List<Tarea> listar() {
-        // TODO: Recuperar el listado mediante el repositorio.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        return repository.findAll();
     }
 
     @Override
     public Optional<Tarea> buscar(long id) {
-        // TODO: Consultar el repositorio con el identificador.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        return repository.findById(id);
     }
 
     @Override
     public Tarea crear(TareaRequest request) {
-        // TODO: Convertir la petición a dominio y solicitar el alta.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        Tarea tarea = TareaMapperServicio.toDomain(request);
+        return repository.create(tarea);
     }
 
     @Override
     public Optional<Tarea> actualizar(long id, TareaRequest request) {
-        // TODO: Convertir la petición usando el ID y solicitar el cambio.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        Tarea tarea = TareaMapperServicio.toDomain(id, request);
+        return repository.update(tarea);
     }
 
     @Override
     public boolean eliminar(long id) {
-        // TODO: Solicitar el borrado al repositorio.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        return repository.delete(id);
     }
 }

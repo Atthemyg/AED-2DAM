@@ -7,12 +7,10 @@ public final class TareaMapperXml {
     private TareaMapperXml() {}
 
     public static TareaEntityXml toEntity(Tarea tarea) {
-        // TODO: Convertir al tipo de destino.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        return new TareaEntityXml(tarea.identificador(), tarea.nombre());
     }
 
     public static Tarea toDomain(TareaEntityXml entity) {
-        // TODO: Convertir al tipo de destino.
-        throw new UnsupportedOperationException("Pendiente de implementar");
+        return new Tarea(entity.getIdTarea(), entity.getNombreTarea());
     }
 }
