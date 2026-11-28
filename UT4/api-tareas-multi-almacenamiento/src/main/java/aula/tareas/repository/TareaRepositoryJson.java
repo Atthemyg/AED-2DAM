@@ -33,6 +33,21 @@ public class TareaRepositoryJson implements ITareaRepository {
     public TareaRepositoryJson(Path path, JsonMapper mapper) {
         this.path = path;
         this.mapper = mapper;
+        crearFicheroSiNoExiste();
+    }
+
+    private void crearFicheroSiNoExiste() {
+        try {
+            Path carpeta = path.getParent();
+            if (carpeta != null) {
+                Files.createDirectories(carpeta);
+            }
+            if (Files.notExists(path)) {
+                Files.createFile(path);
+            }
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 
     @Override

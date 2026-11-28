@@ -11,6 +11,9 @@ import tools.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import tools.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.UncheckedIOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +32,21 @@ public class TareaRepositoryXml extends RepositorioTareaFichero {
 
     public TareaRepositoryXml(Path path) {
         this.path = path;
+        crearFicheroSiNoExiste();
+    }
+
+    private void crearFicheroSiNoExiste() {
+        try {
+            Path carpeta = path.getParent();
+            if (carpeta != null) {
+                Files.createDirectories(carpeta);
+            }
+            if (Files.notExists(path)) {
+                Files.createFile(path);
+            }
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 
     @JsonRootName("tareas")

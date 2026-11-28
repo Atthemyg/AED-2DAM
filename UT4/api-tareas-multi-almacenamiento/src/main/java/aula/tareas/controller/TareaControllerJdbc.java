@@ -52,7 +52,7 @@ public class TareaControllerJdbc {
     @Operation(summary = "Buscar una tarea por ID")
     @ApiResponse(responseCode = "200", description = "Tarea encontrada")
     @ApiResponse(responseCode = "404", description = "No existe una tarea con ese ID")
-    public ResponseEntity<TareaResponse> buscar(long id) {
+    public ResponseEntity<TareaResponse> buscar(@PathVariable long id) {
         Optional<Tarea> tarea = servicio.buscar(id);
         if (tarea.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -64,7 +64,7 @@ public class TareaControllerJdbc {
     @Operation(summary = "Crear una tarea")
     @ApiResponse(responseCode = "201", description = "Tarea creada")
     @ApiResponse(responseCode = "400", description = "Titulo en blanco o cuerpo invalido")
-    public ResponseEntity<TareaResponse> crear(TareaRequest request) {
+    public ResponseEntity<TareaResponse> crear(@Valid @RequestBody TareaRequest request) {
         TareaResponse creada = TareaMapperApi.toResponse(servicio.crear(request));
         return ResponseEntity.created(URI.create("/api/jdbc/tareas/" + creada.id())).body(creada);
     }
@@ -74,7 +74,8 @@ public class TareaControllerJdbc {
     @ApiResponse(responseCode = "200", description = "Tarea actualizada")
     @ApiResponse(responseCode = "400", description = "Titulo en blanco o cuerpo invalido")
     @ApiResponse(responseCode = "404", description = "No existe una tarea con ese ID")
-    public ResponseEntity<TareaResponse> actualizar(long id, TareaRequest request) {
+    public ResponseEntity<TareaResponse> actualizar(@PathVariable long id,
+                                                    @Valid @RequestBody TareaRequest request) {
         Optional<Tarea> tarea = servicio.actualizar(id, request);
         if (tarea.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -86,7 +87,7 @@ public class TareaControllerJdbc {
     @Operation(summary = "Eliminar una tarea")
     @ApiResponse(responseCode = "204", description = "Tarea eliminada")
     @ApiResponse(responseCode = "404", description = "No existe una tarea con ese ID")
-    public ResponseEntity<Void> eliminar(long id) {
+    public ResponseEntity<Void> eliminar(@PathVariable long id) {
         if (servicio.eliminar(id)) {
             return ResponseEntity.noContent().build();
         }

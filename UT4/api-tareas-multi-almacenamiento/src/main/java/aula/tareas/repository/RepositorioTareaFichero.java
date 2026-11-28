@@ -36,7 +36,7 @@ abstract class RepositorioTareaFichero implements ITareaRepository {
                 maximo = existente.identificador();
             }
         }
-        Tarea nueva = new Tarea(maximo + 1, tarea.nombre());
+        Tarea nueva = new Tarea(maximo + 1, tarea.nombre().strip());
         tareas.add(nueva);
         writeAll(tareas);
         return nueva;
@@ -48,7 +48,7 @@ abstract class RepositorioTareaFichero implements ITareaRepository {
         for (int i = 0; i < tareas.size(); i++) {
             Long actual = tareas.get(i).identificador();
             if (actual != null && actual.equals(tarea.identificador())) {
-                Tarea actualizada = new Tarea(actual, tarea.nombre());
+                Tarea actualizada = new Tarea(actual, tarea.nombre().strip());
                 tareas.set(i, actualizada);
                 writeAll(tareas);
                 return Optional.of(actualizada);

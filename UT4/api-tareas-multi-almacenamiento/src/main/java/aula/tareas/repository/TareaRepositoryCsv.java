@@ -38,6 +38,21 @@ public class TareaRepositoryCsv implements ITareaRepository {
 
     public TareaRepositoryCsv(Path path) {
         this.path = path;
+        crearFicheroSiNoExiste();
+    }
+
+    private void crearFicheroSiNoExiste() {
+        try {
+            Path carpeta = path.getParent();
+            if (carpeta != null) {
+                Files.createDirectories(carpeta);
+            }
+            if (Files.notExists(path)) {
+                Files.createFile(path);
+            }
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
+        }
     }
 
     @Override

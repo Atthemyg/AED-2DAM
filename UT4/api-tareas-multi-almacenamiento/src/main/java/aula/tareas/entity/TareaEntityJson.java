@@ -1,13 +1,16 @@
 package aula.tareas.entity;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class TareaEntityJson {
 
-    @JsonAlias("id")
+    @JsonProperty("id")
     private Long idTarea;
-    @JsonAlias("titulo")
+
+    @JsonProperty("titulo")
     private String nombreTarea;
+
+    public TareaEntityJson() {}
 
     public TareaEntityJson(Long idTarea, String nombreTarea) {
         this.idTarea = idTarea;
